@@ -1,0 +1,681 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aibek Shynazbek</title>
+<meta name="description" content="Aibek Shynazbek, backend engineer (Java / Kotlin) building fintech systems: bank payment ingestion, loan origination, debt collection.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #F1F2F7;
+    --surface: #FFFFFF;
+    --surface-2: #F7F7FB;
+    --ink: #151827;
+    --muted: #5E6378;
+    --line: #D8DAE6;
+    --accent: #4A4FCB;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #E8E9FA;
+    --code-bg: #1A1D2E;
+    --code-ink: #E3E5F3;
+    --code-key: #A9ACF7;
+    --code-str: #9FD8B4;
+    --ok: #1F8A5B;
+    --warn: #B7791F;
+    --bad: #C43D3D;
+    --shadow: 0 1px 2px rgba(21,24,39,.06), 0 8px 24px -12px rgba(21,24,39,.18);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #101220;
+      --surface: #181B2B;
+      --surface-2: #1E2133;
+      --ink: #E9EAF3;
+      --muted: #9CA1B9;
+      --line: #2B2F45;
+      --accent: #9DA0F6;
+      --accent-ink: #101220;
+      --accent-soft: #24274A;
+      --code-bg: #0B0D17;
+      --code-ink: #DDE0F0;
+      --code-key: #B4B7FA;
+      --code-str: #9FD8B4;
+      --ok: #4CC38A;
+      --warn: #E0A43A;
+      --bad: #E5645F;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #101220;
+    --surface: #181B2B;
+    --surface-2: #1E2133;
+    --ink: #E9EAF3;
+    --muted: #9CA1B9;
+    --line: #2B2F45;
+    --accent: #9DA0F6;
+    --accent-ink: #101220;
+    --accent-soft: #24274A;
+    --code-bg: #0B0D17;
+    --code-ink: #DDE0F0;
+    --code-key: #B4B7FA;
+    --code-str: #9FD8B4;
+    --ok: #4CC38A;
+    --warn: #E0A43A;
+    --bad: #E5645F;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", "Segoe UI", Roboto, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+  h1, h2, h3 { font-family: "Bricolage Grotesque", "IBM Plex Sans", system-ui, sans-serif; margin: 0; text-wrap: balance; }
+  code, pre, .mono { font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace; }
+  p { margin: 0; }
+  ul { margin: 0; padding-left: 1.2em; }
+  li + li { margin-top: .45em; }
+
+  .page {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    display: grid;
+    grid-template-columns: 296px minmax(0, 1fr);
+    gap: 56px;
+    align-items: start;
+  }
+  @media (max-width: 920px) {
+    .page { grid-template-columns: 1fr; gap: 32px; padding: 24px 18px 64px; }
+  }
+
+  /* ---------- rail ---------- */
+  .rail { position: sticky; top: 24px; display: grid; gap: 22px; }
+  @media (max-width: 920px) { .rail { position: static; } }
+  .name {
+    font-size: 40px; font-weight: 800; line-height: 1; letter-spacing: -.02em;
+    font-variation-settings: "opsz" 96;
+  }
+  .role { margin-top: 8px; font-size: 15px; color: var(--muted); }
+  .role b { color: var(--ink); font-weight: 600; }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  .mode {
+    display: grid; gap: 8px;
+  }
+  .seg {
+    display: grid; grid-template-columns: 1fr 1fr; padding: 3px;
+    background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px;
+  }
+  .seg button {
+    appearance: none; border: 0; background: transparent; color: var(--muted);
+    font: 500 14px/1 "IBM Plex Sans", system-ui, sans-serif; padding: 10px 8px;
+    border-radius: 7px; cursor: pointer; transition: background .15s, color .15s;
+  }
+  .seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
+  .mode-hint { font-size: 13px; color: var(--muted); min-height: 2.6em; }
+
+  .contacts { display: grid; gap: 6px; }
+  .contacts a {
+    display: grid; grid-template-columns: 22px 1fr; align-items: center; gap: 8px;
+    color: var(--ink); font-size: 14px; padding: 6px 8px; margin: 0 -8px; border-radius: 6px;
+  }
+  .contacts a:hover { background: var(--surface-2); text-decoration: none; }
+  .contacts svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; justify-self: center; color: var(--muted); }
+  .contacts .handle { font-family: "IBM Plex Mono", monospace; font-size: 13px; }
+
+  .btnrow { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 8px;
+    font: 500 14px/1 "IBM Plex Sans", system-ui, sans-serif; cursor: pointer; border: 1px solid var(--line);
+    background: var(--surface); color: var(--ink);
+  }
+  .btn:hover { text-decoration: none; border-color: var(--accent); }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .btn.primary:hover { filter: brightness(1.08); }
+
+  .nav { display: grid; gap: 2px; }
+  .nav a { color: var(--muted); font-size: 14px; padding: 5px 8px; margin: 0 -8px; border-radius: 6px; display: flex; justify-content: space-between; }
+  .nav a:hover { color: var(--ink); background: var(--surface-2); text-decoration: none; }
+  .nav a span { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--muted); }
+  @media (max-width: 920px) { .nav { display: none; } }
+
+  /* ---------- main ---------- */
+  .main { display: grid; gap: 64px; min-width: 0; }
+  section { display: grid; gap: 20px; scroll-margin-top: 24px; }
+  .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .sec-head h2 { font-size: 26px; font-weight: 700; letter-spacing: -.01em; }
+  .sec-head .eyebrow { margin-bottom: 4px; }
+
+  /* hero */
+  .hero { display: grid; gap: 24px; }
+  .hero h1 { font-size: clamp(30px, 4.2vw, 46px); font-weight: 700; line-height: 1.08; letter-spacing: -.02em; max-width: 22ch; font-variation-settings: "opsz" 96; }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .lede { max-width: 62ch; font-size: 17px; color: var(--muted); }
+
+  .health {
+    background: var(--code-bg); color: var(--code-ink); border-radius: 12px; padding: 18px 20px;
+    box-shadow: var(--shadow); overflow-x: auto; font-size: 13.5px; line-height: 1.6;
+  }
+  .health .req { color: var(--muted); display: flex; justify-content: space-between; gap: 16px; margin-bottom: 8px; }
+  .health .req b { color: var(--code-ink); font-weight: 500; }
+  .health pre { margin: 0; white-space: pre; }
+  .health .k { color: var(--code-key); }
+  .health .s { color: var(--code-str); }
+  .health .up { color: var(--ok); font-weight: 500; }
+  .health .cursor { display: inline-block; width: 7px; height: 14px; background: var(--code-ink); vertical-align: -2px; margin-left: 2px; animation: blink 1.1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .health .cursor { animation: none; } html { scroll-behavior: auto; } }
+
+  .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .fact { background: var(--surface); padding: 14px 16px; display: grid; gap: 2px; }
+  .fact b { font-family: "Bricolage Grotesque", system-ui, sans-serif; font-size: 26px; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .fact span { font-size: 13px; color: var(--muted); }
+  @media (max-width: 640px) { .facts { grid-template-columns: 1fr 1fr; } }
+
+  /* git log timeline */
+  .log { display: grid; grid-template-columns: 64px 1fr; }
+  .log .lane { position: relative; }
+  .log .row { display: contents; }
+  .log .lane::before { content: ""; position: absolute; left: 15px; top: 0; bottom: 0; width: 2px; background: var(--line); }
+  .log .row:first-child .lane::before { top: 14px; }
+  .log .row:last-child .lane::before { bottom: auto; height: 14px; }
+  .lane .dot { position: absolute; left: 10px; top: 8px; width: 12px; height: 12px; border-radius: 50%; background: var(--surface); border: 2px solid var(--accent); }
+  .lane .dot.tag { border-radius: 3px; transform: rotate(45deg); border-color: var(--warn); }
+  .lane .dot.root { background: var(--accent); }
+  .lane .br { position: absolute; left: 39px; top: 0; bottom: 0; width: 2px; background: var(--accent); opacity: .55; }
+  .lane .dot.b { left: 34px; border-color: var(--accent); }
+  .lane svg { position: absolute; left: 15px; width: 26px; height: 34px; overflow: visible; }
+  .lane svg path { fill: none; stroke: var(--accent); stroke-width: 2; opacity: .55; }
+  .lane svg.open { top: 14px; }
+  .lane svg.close { bottom: -6px; }
+  .entry { padding: 0 0 26px 4px; display: grid; gap: 6px; }
+  .entry .meta { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--muted); }
+  .entry .meta .hash { color: var(--accent); }
+  .entry h3 { font-size: 18px; font-weight: 700; }
+  .entry h3 small { font-weight: 500; color: var(--muted); font-family: "IBM Plex Sans", system-ui, sans-serif; font-size: 14px; }
+  .entry .stack { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; color: var(--muted); }
+  .entry ul { max-width: 68ch; font-size: 15px; }
+  .entry.sub { padding-bottom: 18px; }
+  .entry.sub h3 { font-size: 15.5px; font-weight: 600; }
+  .entry.sub p { font-size: 14.5px; color: var(--muted); max-width: 66ch; }
+
+  /* cases */
+  .cases { display: grid; gap: 18px; }
+  .case {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 24px 26px;
+    display: grid; gap: 16px; box-shadow: var(--shadow);
+  }
+  .case header { display: grid; gap: 6px; }
+  .case .kicker { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .case .kicker .eyebrow { color: var(--accent); }
+  .case h3 { font-size: 21px; font-weight: 700; letter-spacing: -.01em; }
+  .case .outcome { font-size: 16px; max-width: 64ch; }
+  .case .outcome b { font-weight: 600; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font-family: "IBM Plex Mono", monospace; font-size: 12px; padding: 4px 8px; border-radius: 6px; background: var(--surface-2); border: 1px solid var(--line); color: var(--muted); }
+  .chip.hl { background: var(--accent-soft); border-color: transparent; color: var(--accent); }
+
+  .deep { display: grid; gap: 14px; padding-top: 14px; border-top: 1px dashed var(--line); }
+  .deep h4 { margin: 0; font: 600 12px/1 "IBM Plex Mono", monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .deep ul { max-width: 70ch; font-size: 14.5px; }
+  .deep li b { font-weight: 600; }
+  .deep code { font-size: 12.5px; background: var(--surface-2); padding: 1px 5px; border-radius: 4px; border: 1px solid var(--line); }
+
+  .flow { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; line-height: 1.5; background: var(--code-bg); color: var(--code-ink); padding: 14px 16px; border-radius: 10px; overflow-x: auto; margin: 0; }
+  .flow .k { color: var(--code-key); }
+  .flow .c { color: var(--muted); }
+
+  details.q { border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); }
+  details.q summary { cursor: pointer; padding: 10px 14px; font-size: 14px; font-weight: 500; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+  details.q summary::-webkit-details-marker { display: none; }
+  details.q summary::after { content: "+"; font-family: "IBM Plex Mono", monospace; color: var(--muted); }
+  details.q[open] summary::after { content: "–"; }
+  details.q .a { padding: 0 14px 12px; font-size: 14px; color: var(--muted); max-width: 68ch; }
+  .qs { display: grid; gap: 8px; }
+
+  /* health demo */
+  .states { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .state { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; display: grid; gap: 4px; background: var(--surface-2); font-size: 13px; }
+  .state b { font-family: "IBM Plex Mono", monospace; font-size: 12px; display: flex; align-items: center; gap: 6px; }
+  .state b::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--dotc); }
+  .state.up { --dotc: var(--ok); } .state.deg { --dotc: var(--warn); } .state.down { --dotc: var(--bad); }
+  .state span { color: var(--muted); }
+  @media (max-width: 640px) { .states { grid-template-columns: 1fr; } }
+
+  /* stack */
+  .stack-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .stack-cell { background: var(--surface); padding: 14px 16px; display: grid; gap: 8px; align-content: start; }
+  .stack-cell .eyebrow { color: var(--muted); }
+  .stack-cell p { font-size: 14.5px; }
+  @media (max-width: 640px) { .stack-grid { grid-template-columns: 1fr; } }
+
+  /* edu */
+  .edu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .edu .item { display: grid; gap: 4px; padding: 14px 0; border-top: 2px solid var(--ink); }
+  .edu .item b { font-weight: 600; }
+  .edu .item span { color: var(--muted); font-size: 14px; }
+  .langs { display: flex; gap: 20px; flex-wrap: wrap; font-size: 14.5px; }
+  .langs span { color: var(--muted); }
+  @media (max-width: 640px) { .edu { grid-template-columns: 1fr; } }
+
+  /* mode switching */
+  body[data-mode="recruiter"] .lead-only { display: none; }
+  body[data-mode="lead"] .recruiter-only { display: none; }
+
+  footer { color: var(--muted); font-size: 13px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 20px; }
+
+  @media print {
+    body { background: #fff; color: #000; }
+    .page { grid-template-columns: 1fr; gap: 24px; padding: 0; }
+    .rail { position: static; }
+    .mode, .nav, .btnrow, .health .cursor { display: none !important; }
+    .lead-only, .recruiter-only { display: block !important; }
+    .case, .facts, .stack-grid { box-shadow: none; break-inside: avoid; }
+    details.q { break-inside: avoid; }
+    details.q[open], details.q { display: block; }
+    a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 11px; color: #555; }
+  }
+</style>
+
+<div class="page">
+  <aside class="rail">
+    <div>
+      <div class="name">Aibek<br>Shynazbek</div>
+      <p class="role"><b>Backend Engineer</b> · Java / Kotlin<br>Payments, lending, fintech integrations</p>
+    </div>
+
+    <div class="mode">
+      <div class="eyebrow">Version</div>
+      <div class="seg" role="group" aria-label="Reading mode">
+        <button type="button" data-set-mode="recruiter" aria-pressed="true">Short</button>
+        <button type="button" data-set-mode="lead" aria-pressed="false">Detailed</button>
+      </div>
+      <p class="mode-hint" id="modeHint">For recruiters. Results, numbers, stack. Two minutes.</p>
+    </div>
+
+    <div class="btnrow">
+      <a class="btn primary" href="https://t.me/aakkuliyev" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>
+        Write me on Telegram
+      </a>
+      <a class="btn" href="Aibek_Shynazbek.pdf" target="_blank" rel="noopener">CV (PDF)</a>
+    </div>
+
+    <div class="contacts">
+      <div class="eyebrow">Contacts</div>
+      <a href="mailto:aakkuliyev@gmail.com"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span>aakkuliyev@gmail.com</span></a>
+      <a href="https://t.me/aakkuliyev" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg><span class="handle">@aakkuliyev</span></a>
+      <a href="https://www.linkedin.com/in/aibek-shynazbek-69458723a/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg><span>LinkedIn</span></a>
+      <a href="https://github.com/aibekdevx" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-.9-2.6c3.1-.3 6.4-1.5 6.4-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 1s-1.2-.4-3.9 1.5a13.4 13.4 0 0 0-7 0C6.3.6 5.1 1 5.1 1A5 5 0 0 0 5 4.8a5.4 5.4 0 0 0-1.5 3.8c0 5.4 3.3 6.6 6.4 7a3.4 3.4 0 0 0-.9 2.6V23"/></svg><span class="handle">github.com/aibekdevx</span></a>
+      <a href="https://leetcode.com/u/aakkuliyev/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/><path d="m14 4-4 16"/></svg><span class="handle">leetcode.com/u/aakkuliyev</span></a>
+    </div>
+
+    <nav class="nav" aria-label="Sections">
+      <div class="eyebrow">On this page</div>
+      <a href="#log">Experience <span>git log</span></a>
+      <a href="#cases">Projects <span>4</span></a>
+      <a href="#stack">Stack</a>
+      <a href="#edu">Education</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <section class="hero" id="top">
+      <h1>I write backend for <em>lending and payments</em>. Java, Kotlin, three years in production.</h1>
+      <p class="lede">Most of my work is integrations: banks, credit bureaus, dealer marketplaces, a loan pipeline in between. Spring Boot, Kafka, PostgreSQL, Camunda. I spend a lot of time on the boring parts, like making sure a payment is never counted twice and a service says it is broken before a customer does.</p>
+
+      <div class="health mono" aria-label="Health check style summary">
+        <div class="req"><span><b>GET</b> /health</span><span>200 OK · <span id="latency">12 ms</span></span></div>
+<pre>{
+  <span class="k">"status"</span>: <span class="up">"UP"</span>,
+  <span class="k">"role"</span>: <span class="s">"Backend Engineer · Java / Kotlin"</span>,
+  <span class="k">"experience"</span>: <span class="s">"3+ years"</span>,
+  <span class="k">"open_to"</span>: [<span class="s">"backend"</span>, <span class="s">"full-stack (Java + React)"</span>],
+  <span class="k">"location"</span>: <span class="s">"Kazakhstan (UTC+5) · remote-friendly"</span>,
+  <span class="k">"languages"</span>: [<span class="s">"en:B2"</span>, <span class="s">"ru:C2"</span>, <span class="s">"kk:native"</span>],
+  <span class="k">"contact"</span>: <span class="s">"t.me/aakkuliyev"</span><span class="cursor"></span>
+}</pre>
+      </div>
+
+      <div class="facts">
+        <div class="fact"><b>7</b><span>banks connected to one payment service</span></div>
+        <div class="fact"><b>10</b><span>dealer marketplaces sending loan applications over Kafka</span></div>
+        <div class="fact"><b>−60%</b><span>daily batch runtime, 35–45 min → 15–20 min</span></div>
+        <div class="fact"><b>130+</b><span>Flyway migrations on the loan pipeline, none broke prod</span></div>
+      </div>
+    </section>
+
+    <section id="log">
+      <div class="sec-head">
+        <div><div class="eyebrow">git log --graph --all</div><h2>Experience</h2></div>
+        <span class="eyebrow">newest first</span>
+      </div>
+
+      <div class="log">
+        <div class="row">
+          <div class="lane"><span class="dot tag"></span></div>
+          <div class="entry">
+            <div class="meta"><span class="hash">tag: aws-dev-associate</span><span>2026</span></div>
+            <h3>AWS Developer – Associate <small>· valid through 2029</small></h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="lane"><span class="dot tag"></span></div>
+          <div class="entry">
+            <div class="meta"><span class="hash">tag: react-qualified</span><span>2026</span></div>
+            <h3>React Developer Qualification <small>· DataArt internal certification</small></h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="lane"><span class="dot"></span><svg class="open" viewBox="0 0 26 34"><path d="M1 0 C1 20, 25 14, 25 34"/></svg></div>
+          <div class="entry">
+            <div class="meta"><span class="hash">HEAD -> main</span><span>Sep 2025 – present</span></div>
+            <h3>Java Software Engineer <small>· DataArt</small></h3>
+            <p class="stack">Java 21 · Kotlin · Spring Boot 3 · Kafka · PostgreSQL · Camunda BPM · Docker · GitLab CI/CD</p>
+            <ul class="recruiter-only">
+              <li>One fintech client, a lender. Four services below, all running in production.</li>
+              <li>On-call for production: found root causes in logs, DB and HTTP traces, rewrote health checks so they stopped alerting for nothing.</li>
+              <li>Moved deploys from hand-run scripts to Docker and a GitLab CI/CD pipeline.</li>
+              <li>Also did the React / TypeScript frontend for internal tools when nobody else was free.</li>
+            </ul>
+            <ul class="lead-only">
+              <li>Four services for one lending client, see projects below: bank payments, dealer intake on Kafka, loan pipeline on Camunda, debt collection.</li>
+              <li>Integrations with government services and credit bureaus over REST and SOAP; migrated a bureau integration to a new API version with a persisted retry queue.</li>
+              <li>After we locked a table in prod with a migration, made DDL rollout a procedure: <code class="mono">lock_timeout</code> plus a low-traffic window.</li>
+              <li>Dockerised the services and wrote the GitLab CI/CD pipeline. React / TypeScript for internal tools.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="lane"><span class="br"></span><span class="dot b"></span></div>
+          <div class="entry sub">
+            <div class="meta"><span class="hash">feat/bank-ingestion</span><span>2025 – 2026</span></div>
+            <h3>Payment ingestion from 7 banks</h3>
+            <p>Bank connectors, idempotent intake, parsing payment purpose text, health checks with UP / DEGRADED / DOWN.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="lane"><span class="br"></span><span class="dot b"></span></div>
+          <div class="entry sub">
+            <div class="meta"><span class="hash">feat/dealer-intake-kafka</span><span>2024 – 2025</span></div>
+            <h3>Dealer marketplace intake on Kafka</h3>
+            <p>10 partners, 6 topics, 20 partitions, DLQ per topic, contract PDFs, Gatling load tests.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="lane"><span class="br"></span><span class="dot b"></span></div>
+          <div class="entry sub">
+            <div class="meta"><span class="hash">feat/loan-origination</span></div>
+            <h3>Loan origination on Camunda</h3>
+            <p>Credit bureau API migration with a retry queue, car-collateral loan product, incident debugging.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="lane"><span class="br"></span><span class="dot b"></span><svg class="close" viewBox="0 0 26 34"><path d="M25 0 C25 20, 1 14, 1 34"/></svg></div>
+          <div class="entry sub">
+            <div class="meta"><span class="hash">feat/collection-engine</span></div>
+            <h3>Debt collection engine</h3>
+            <p>Batch runtime −60%, contract hold feature, round-robin distribution, job monitoring for Zabbix.</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="lane"><span class="dot"></span></div>
+          <div class="entry">
+            <div class="meta"><span class="hash">main</span><span>Nov 2023 – Sep 2025</span></div>
+            <h3>Java Developer <small>· MagnumGO</small></h3>
+            <p class="stack">Java 17 · Spring Boot · PostgreSQL · Redis · Docker</p>
+            <ul class="recruiter-only">
+              <li>Order, subscription and payment services for an e-grocery app with a lot of traffic.</li>
+              <li>Cut database load on the read-heavy endpoints with query tuning and Redis caching.</li>
+            </ul>
+            <ul class="lead-only">
+              <li>Owned the order, subscription and payment services. REST APIs and service-to-service integrations.</li>
+              <li>Tuned PostgreSQL queries and added Redis caching for hot reference data.</li>
+              <li>Tests with JUnit, Mockito and Testcontainers. Did code review for the team.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="lane"><span class="dot root"></span></div>
+          <div class="entry">
+            <div class="meta"><span class="hash">initial commit</span><span>2021 – 2025</span></div>
+            <h3>BSc in Software Engineering <small>· International IT University</small></h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cases">
+      <div class="sec-head">
+        <div><div class="eyebrow">Projects · names under NDA</div><h2>Projects</h2></div>
+      </div>
+      <p class="lede recruiter-only" style="font-size:15px">No client, bank or partner names, NDA. The numbers are real.</p>
+      <p class="lede lead-only" style="font-size:15px">No client, bank or partner names, NDA. Under each project there are the questions I usually get in interviews, with my answers.</p>
+
+      <div class="cases">
+
+        <!-- CASE 1 -->
+        <article class="case">
+          <header>
+            <div class="kicker"><span class="eyebrow">01 · Payments</span><span class="chip">Kotlin</span><span class="chip">Spring Boot 3.5</span><span class="chip">PostgreSQL</span><span class="chip">Resilience4j</span></div>
+            <h3>Payments from 7 banks</h3>
+          </header>
+          <p class="outcome">Customers of a microfinance company repay loans through seven different banks. Before, someone matched bank statements to loan contracts by hand. <b>Now a service pulls payments from each bank, finds the contract and posts the payment to the accounting core on its own.</b> Team of about six. My part: four of the bank connectors and all of the monitoring.</p>
+          <div class="chips recruiter-only">
+            <span class="chip hl">idempotent intake</span><span class="chip hl">one connector per bank</span><span class="chip hl">no more false alerts</span><span class="chip hl">retry + rate limit</span>
+          </div>
+
+          <div class="deep lead-only">
+            <h4>Details</h4>
+<pre class="flow"><span class="c">// polling (cron) or webhook, per bank</span>
+BankConnector          <span class="c">← one class per bank: auth, pagination, statement schema</span>
+      ↓
+IngestionService       <span class="c">← normalise, dedupe, resolve contractId</span>
+      ↓
+PostgreSQL             <span class="c">← payment_raw · payment · poll_checkpoint · processing_failure</span>
+      ↓
+CoreDeliveryWorker     <span class="c">← Resilience4j Retry + RateLimiter → accounting core</span>
+      ↓
+NightProcessingWorker  <span class="c">← catch-up for missed days</span></pre>
+            <ul>
+              <li><b>Idempotency in the database.</b> Unique index on <code>(bank_code, bank_tx_id)</code>, a repeated ingest just returns the existing row. For banks that do not give a stable transaction id there is a SHA fingerprint of the payload. One bank showed the same payment in the statement and in a settlement registry, so I switched the id to the reference code, which does not change between exports.</li>
+              <li><b>Parsing the payment purpose.</b> The contract number and national id sit in a text field a person typed: Cyrillic <code>Р</code> instead of Latin <code>P</code>, missing spaces, prefixes, restructuring suffixes. Resolution goes exact match, then LIKE lookup in the warehouse, then fallback by national id.</li>
+              <li><b>Health checks.</b> I track "did polling run" (<code>last_polled_at</code>) separately from "did the checkpoint move" (<code>since_time</code>). If a bank simply had no payments that day the checkpoint stays put, and the old check reported DOWN. Now there are three states:</li>
+            </ul>
+            <div class="states">
+              <div class="state up"><b>UP</b><span>polling succeeds, checkpoint within threshold</span></div>
+              <div class="state deg"><b>DEGRADED</b><span>polling succeeds, checkpoint lagging</span></div>
+              <div class="state down"><b>DOWN</b><span>no successful poll for longer than the threshold</span></div>
+            </div>
+            <ul>
+              <li><b>Errors.</b> Transient and business errors are separate, only transient ones get retried, and a transient failure puts the payment back to <code>NEW</code> instead of leaving it half-done. Every failure goes to <code>processing_failure</code> with the stage and a reason code, so incidents are sorted out from a table and not by grepping logs.</li>
+            </ul>
+            <h4>Questions I get</h4>
+            <div class="qs">
+              <details class="q"><summary>Why a unique index and not a SELECT before INSERT?</summary><div class="a">Two polling runs can overlap, and a webhook can arrive twice. Check-then-insert has a race window. The unique index is the only thing that holds under concurrency, the app catches the violation and returns the existing row.</div></details>
+              <details class="q"><summary>How likely is a fingerprint collision, and what happens on one?</summary><div class="a">The fingerprint is a hash of the normalised payload, so two payments would have to match in every field the bank gives us. A match is treated as a duplicate and skipped, but the raw row is still saved, so a false positive shows up in reconciliation and is not lost.</div></details>
+              <details class="q"><summary>What would you improve first?</summary><div class="a">Tests for the parsers. The rules for purpose text grew out of real cases and there is no fixture suite for them yet. After that, replace the SSH + supervisor deploy script with the GitLab pipeline the other services already use.</div></details>
+            </div>
+          </div>
+        </article>
+
+        <!-- CASE 2 -->
+        <article class="case">
+          <header>
+            <div class="kicker"><span class="eyebrow">02 · Lending intake</span><span class="chip">Kotlin 1.9</span><span class="chip">Spring Boot 3.2</span><span class="chip">Apache Kafka</span><span class="chip">Gatling</span></div>
+            <h3>Loan applications from 10 dealer marketplaces</h3>
+          </header>
+          <p class="outcome">Car-loan applications come from ten dealer marketplaces, each with its own API, product list and rates. Underwriting takes minutes, partners want an answer right away. <b>I designed the integration layer and moved the exchange to Kafka: the partner gets an acknowledgement immediately and the decision later, asynchronously.</b></p>
+          <div class="chips recruiter-only">
+            <span class="chip hl">6 topics · 20 partitions</span><span class="chip hl">DLQ per topic</span><span class="chip hl">new partner = 2 classes</span><span class="chip hl">contract PDFs with QR</span>
+          </div>
+
+          <div class="deep lead-only">
+            <h4>Details</h4>
+            <ul>
+              <li><b>Two interfaces instead of ten if-branches.</b> <code>PartnerStrategy</code> maps an incoming application to our model (product, purpose, rate), <code>PartnerIntegrationService</code> makes the calls back to the partner. A factory picks the implementation by partner name. A new partner is two classes and an enum entry, the core does not change.</li>
+              <li><b>Kafka.</b> Six topics: new application, status, client registration, client agreement, documents to sign, signed documents with QR. Consumers use <code>MANUAL_IMMEDIATE</code> ack and <code>max.poll.records=1</code>, so a message is committed only after the partner confirmed it got it.</li>
+              <li><b>Failures.</b> <code>DefaultErrorHandler</code> with backoff and a <code>dlq-&lt;topic&gt;</code> for every topic. Errors that make no sense to retry go straight to the DLQ. Before that one partner with a dead API stopped the whole partition for everyone.</li>
+              <li><b>Business logic.</b> Rate from a term × down-payment matrix per partner product, annuity payment, validation of blocked products and thresholds per dealer group.</li>
+              <li><b>Documents.</b> Contracts and print forms from DOCX templates to PDF (PDFBox, POI, XDocReport), signed packages with QR codes, file storage. Also Envers for audit, Caffeine cache for reference data, 18 Flyway versions.</li>
+              <li><b>Load testing.</b> Gatling simulation for application creation, plus a heap dump to find the hot spot before go-live.</li>
+            </ul>
+            <h4>Questions I get</h4>
+            <div class="qs">
+              <details class="q"><summary>Why Kafka and not HTTP callbacks or RabbitMQ?</summary><div class="a">The loan pipeline is a separate system and already used Kafka. A durable log lets both sides survive each other's downtime and lets us replay one partner's messages from the DLQ. With HTTP callbacks all the retry state would live inside our service instead of the broker.</div></details>
+              <details class="q"><summary>What does max.poll.records=1 cost you?</summary><div class="a">Throughput per consumer. Here the volume is applications per day, not per second, and the call to the partner is the slow part anyway. Confirmed delivery mattered more than batching. If the volume grew I would add partitions and consumers for the busy partners, not globally.</div></details>
+              <details class="q"><summary>How do you handle a partner sending the same application twice?</summary><div class="a">Intake is idempotent. A repeated application from the same partner resolves to the existing one and gets its current status back, no second process is started.</div></details>
+            </div>
+          </div>
+        </article>
+
+        <!-- CASE 3 -->
+        <article class="case">
+          <header>
+            <div class="kicker"><span class="eyebrow">03 · Loan origination</span><span class="chip">Kotlin</span><span class="chip">Spring Boot 3</span><span class="chip">Camunda BPM 7</span><span class="chip">REST / SOAP</span></div>
+            <h3>Loan pipeline on Camunda</h3>
+          </header>
+          <p class="outcome">The full loan process of a retail lender: lead, scoring, underwriting, signing, disbursement, all as BPMN in Camunda. Around 425 Kotlin classes and 130+ Flyway migrations. <b>I moved the credit bureau integration to a new API version without losing applications that were in flight, added the state bureau over SOAP, and built a car-collateral loan product from the data model to the underwriter screens.</b></p>
+          <div class="chips recruiter-only">
+            <span class="chip hl">retry queue in DB</span><span class="chip hl">bureau API migration</span><span class="chip hl">new loan product</span><span class="chip hl">incident debugging</span>
+          </div>
+
+          <div class="deep lead-only">
+            <h4>Details</h4>
+            <ul>
+              <li><b>Sending statuses to the bureau.</b> Used to be fire-and-forget: a 4xx was ignored and the status marked as sent. I replaced it with a queue table with attempt count, exponential backoff and the stored response body. Failed sends are retried, and when they fail for good you can see why.</li>
+              <li><b>API migration.</b> New addressing, new required fields, RFC 3339 dates. The bureau turned the old version off earlier than promised. Applications created under the old ids needed a separate update path, which I found and shipped.</li>
+              <li><b>Car-collateral product.</b> New collateral type in the model and in every outbound integration, loan amount with add-on services, parsing the client's bank statement to prefill payout details, new document categories for the underwriter, BPMN routing that respects auto-approval from scoring.</li>
+              <li><b>Consistency.</b> An application lives in PostgreSQL, in Camunda and in external systems at the same time. A lot of the work was deciding what runs inside a transaction and what runs as an idempotent call with a retry.</li>
+            </ul>
+            <h4>One incident</h4>
+            <ul>
+              <li>A partner said "we get no answer for this client". The database had nothing for that client at all. The lead was in the logs with a stack trace on a reference lookup: a query that expected one row got two, the dealer directory had duplicate codes. The whole lead was processed in one transaction, so the client, the application and the process were rolled back together, silently. I checked the logs, it was happening every day for eight codes, not one. Fixed both sides: cleaned the data and made the code tolerate duplicates.</li>
+            </ul>
+            <h4>Questions I get</h4>
+            <div class="qs">
+              <details class="q"><summary>Why a queue table and not just a retry annotation?</summary><div class="a">In-memory retries die with the pod and leave no trace. The table survives restarts, caps the attempts and keeps the bureau's answer, which is what support needs when someone asks why a status was late.</div></details>
+              <details class="q"><summary>How do you keep 130+ migrations safe across environments?</summary><div class="a">Before every release we check Flyway version conflicts between branches, because the environments had drifted apart. DDL on busy tables runs with a lock_timeout in a low-traffic window. We learned that after locking a table in prod.</div></details>
+            </div>
+          </div>
+        </article>
+
+        <!-- CASE 4 -->
+        <article class="case">
+          <header>
+            <div class="kicker"><span class="eyebrow">04 · Collection</span><span class="chip">Kotlin 1.3 · JDK 8</span><span class="chip">Spring Boot</span><span class="chip">PostgreSQL</span><span class="chip">Zabbix</span></div>
+            <h3>Debt collection service</h3>
+          </header>
+          <p class="outcome">The collection department works overdue contracts that a service hands out to managers every morning. <b>I cut the daily batch from 35–45 minutes to 15–20 and moved it out of working hours, built the contract hold feature from schema to REST, and gave ops a job-health endpoint that stopped false alerts.</b> Legacy stack, upgrading was not an option.</p>
+          <div class="chips recruiter-only">
+            <span class="chip hl">batch −60%</span><span class="chip hl">hold feature with audit log</span><span class="chip hl">fair distribution</span><span class="chip hl">no false job alerts</span>
+          </div>
+
+          <div class="deep lead-only">
+            <h4>Details</h4>
+            <ul>
+              <li><b>Hold feature.</b> A contract can be taken out of collection because of a court case, a complaint or an investigation. The hold sits on the contract, not on the work card, because cards get recreated from the warehouse and the reason has to survive that. It is a flag and a separate tab, not a new status, so the status machine stays as it is and the hold is reversible. The exclusion is in the distribution SQL, not in code filters: there are five distribution paths and one forgotten filter would leak a held contract. The state change and the append-only audit record commit in one transaction, a partial unique index is the last line of defence.</li>
+              <li><b>Distribution.</b> Round-robin by debt tier with regional segments and per-segment pointers so it stays fair, cumulative SOFT → HARD escalation, segment migrations. Managers can be excluded temporarily (vacation, sick leave) or for good, with a log and roster filtering.</li>
+              <li><b>Job monitoring for Zabbix.</b> An endpoint with real job durations, a health threshold and a "currently running" guard, so a job that is simply still running is not reported as stuck.</li>
+              <li><b>Incidents.</b> Cron jobs hanging on a REST client with no timeouts, batch jobs stuck in STARTED, data drift between the warehouse ETL and our ingest, and the table lock from a DDL in prod that started the lock_timeout rule.</li>
+              <li><b>Prototyped.</b> Near-real-time payments through Kafka: a fast signal from the topic, amounts reconciled against the warehouse.</li>
+            </ul>
+            <h4>Questions I get</h4>
+            <div class="qs">
+              <details class="q"><summary>Why is the hold enforced in SQL rather than in the service layer?</summary><div class="a">Two reasons. Five code paths hand out contracts, one WHERE in the shared query covers all of them. And PostgreSQL can use the index instead of loading rows just to throw them away.</div></details>
+              <details class="q"><summary>What did the 60% batch gain actually come from?</summary><div class="a">First measuring: the job-duration endpoint showed which steps ate the time. Then reworking the slowest steps of the distribution run and the queries behind them, and measuring again.</div></details>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="stack">
+      <div class="sec-head"><div><div class="eyebrow">Tools</div><h2>Stack</h2></div></div>
+      <div class="stack-grid">
+        <div class="stack-cell"><div class="eyebrow">Languages</div><p>Java 8 / 17 / 21, Kotlin, SQL, Bash</p></div>
+        <div class="stack-cell"><div class="eyebrow">Frameworks</div><p>Spring Boot, Spring MVC, Spring Security, Spring Data JPA, Hibernate, Camunda BPM</p></div>
+        <div class="stack-cell"><div class="eyebrow">Data</div><p>PostgreSQL, MongoDB, Redis, Flyway / Liquibase, Hibernate Envers</p></div>
+        <div class="stack-cell"><div class="eyebrow">Messaging &amp; caching</div><p>Apache Kafka, RabbitMQ, Redis, Caffeine</p></div>
+        <div class="stack-cell"><div class="eyebrow">Reliability</div><p>Resilience4j, DLQ and retry design, idempotency, scheduled jobs, health-check design</p></div>
+        <div class="stack-cell"><div class="eyebrow">Testing</div><p>JUnit, Mockito, Testcontainers, Gatling</p></div>
+        <div class="stack-cell"><div class="eyebrow">Tooling &amp; DevOps</div><p>Docker, Git, GitLab CI/CD, Gradle, Maven, OpenAPI / Swagger</p></div>
+        <div class="stack-cell"><div class="eyebrow">Cloud, monitoring, frontend</div><p>AWS (EC2, S3, RDS), Grafana, Zabbix · React, TypeScript</p></div>
+      </div>
+    </section>
+
+    <section id="edu">
+      <div class="sec-head"><div><div class="eyebrow">Education, certificates, languages</div><h2>Education</h2></div></div>
+      <div class="edu">
+        <div class="item"><b>BSc in Software Engineering</b><span>International IT University · 2021 – 2025</span></div>
+        <div class="item"><b>AWS Developer – Associate</b><span>Amazon Web Services · 2026 – 2029</span></div>
+        <div class="item"><b>React Developer Qualification</b><span>DataArt internal certification · 2026</span></div>
+      </div>
+      <div class="langs">
+        <div>English <span>B2 · TOEFL iBT 90</span></div>
+        <div>Russian <span>C2</span></div>
+        <div>Kazakh <span>native</span></div>
+      </div>
+    </section>
+
+    <footer>
+      <span>Aibek Shynazbek · Backend Engineer</span>
+      <span><a href="https://t.me/aakkuliyev" target="_blank" rel="noopener">t.me/aakkuliyev</a> · <a href="mailto:aakkuliyev@gmail.com">aakkuliyev@gmail.com</a></span>
+    </footer>
+  </main>
+</div>
+
+<script>
+  (function () {
+    var hints = {
+      recruiter: "For recruiters. Results, numbers, stack. Two minutes.",
+      lead: "For engineers. Architecture, trade-offs and the questions I usually get in interviews."
+    };
+    var buttons = document.querySelectorAll("[data-set-mode]");
+    var hint = document.getElementById("modeHint");
+
+    function apply(mode, persist) {
+      document.body.setAttribute("data-mode", mode);
+      buttons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-set-mode") === mode)); });
+      hint.textContent = hints[mode];
+      if (persist) { try { localStorage.setItem("mode", mode); } catch (e) {} }
+    }
+
+    var initial = "recruiter";
+    try { var saved = localStorage.getItem("mode"); if (saved === "lead" || saved === "recruiter") initial = saved; } catch (e) {}
+    if (location.hash === "#lead") initial = "lead";
+    apply(initial, false);
+
+    buttons.forEach(function (b) {
+      b.addEventListener("click", function () { apply(b.getAttribute("data-set-mode"), true); });
+    });
+
+    // small live touch on the /health block
+    var lat = document.getElementById("latency");
+    if (lat && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setInterval(function () { lat.textContent = (9 + Math.floor(Math.random() * 8)) + " ms"; }, 2500);
+    }
+  })();
+</script>
